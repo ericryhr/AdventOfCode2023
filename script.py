@@ -22,6 +22,7 @@ def crear_main_py(dia):
         contenido = file.read()
 
     contenido = contenido.replace("Day:", f"Day: {dia}")
+    contenido = contenido.replace("input.txt", f"day{dia}/input.txt")
 
     with open(ruta_destino, 'w') as file:
         file.write(contenido)
