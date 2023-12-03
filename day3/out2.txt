@@ -216,7 +216,7 @@ Gear in (76, 71) is valid: (939, 282)
 Gear in (76, 80) is valid: (85, 676)
 Gear in (76, 136) is valid: (671, 997)
 Gear in (77, 126) is valid: (567, 932)
-Gear in (78, 63) is invalid: [41, 109, 450]
+Gear in (78, 63) is valid: (109, 450)
 Gear in (79, 31) is valid: (296, 429)
 Gear in (79, 68) is valid: (902, 409)
 Gear in (79, 113) is valid: (833, 961)
@@ -239,7 +239,7 @@ Gear in (85, 6) is valid: (556, 140)
 Gear in (85, 12) is valid: (923, 682)
 Gear in (85, 42) is valid: (433, 7)
 Gear in (85, 57) is valid: (181, 941)
-Gear in (85, 101) is invalid: [598, 7, 780]
+Gear in (85, 101) is valid: (598, 780)
 Gear in (86, 18) is valid: (430, 49)
 Gear in (86, 69) is invalid: [628]
 Gear in (86, 110) is valid: (420, 340)
@@ -376,4 +376,4 @@ Gear in (138, 41) is valid: (116, 825)
 Gear in (138, 77) is valid: (311, 869)
 Gear in (138, 82) is invalid: [698]
 Gear in (138, 135) is valid: (882, 110)
-The solution to part two is: 80651309
+The solution to part two is: 81166799
