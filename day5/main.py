@@ -4,13 +4,20 @@ Day: 5
 GitHub: https://github.com/ericryhr
 """
 
+from numba import jit
+from numba.typed import List
 import itertools
+from numba.core.errors import NumbaDeprecationWarning, NumbaPendingDeprecationWarning
+import warnings
+
+warnings.simplefilter('ignore', category=NumbaDeprecationWarning)
+warnings.simplefilter('ignore', category=NumbaPendingDeprecationWarning)
 
 def parse_mapping(lines, mapping):
     lines = lines[1:]
     for line in lines:
         values = line.strip().split()
-        mapping.append((values[0], values[1], values[2]))
+        mapping.append((int(values[0]), int(values[1]), int(values[2])))
 
 def part1(lines):
     result = -1
@@ -28,6 +35,7 @@ def part1(lines):
     
     seed_line = lines[0]
     seeds = seed_line.strip().split(': ')[1].split()
+    seeds = list(map(lambda x: int(x), seeds))
     lines = lines[2:]
 
     # Split lines by mappings
@@ -49,10 +57,10 @@ def part1(lines):
                 humidity_to_location_mapping]
     
     for seed in seeds:
-        currentValue = int(seed)
+        currentValue = seed
         for mapping in mappings:
             for (dest, source, rang) in mapping:
-                (dest, source, rang) = (int(dest), int(source), int(rang))
+                (dest, source, rang) = (dest, source, rang)
                 if currentValue in range(source, source + rang):
                     currentValue = currentValue + (dest - source)
                     break   # Check next mapping
@@ -62,12 +70,28 @@ def part1(lines):
     if result != -1:
         print("The solution to part one is: " + str(result))
 
+@jit(nopython=True)
+def check_seeds(seeds, mappings):
+    number_checked = 0
+    result = 10e30
+    for (s, seed_rang) in seeds:
+        for seed in range(s, s+seed_rang):
+            number_checked += 1
+            # if number_checked % 1e6 == 0: print(number_checked)
+            currentValue = seed
+            for mapping in mappings:
+                for (dest, source, rang) in mapping:
+                    (dest, source, rang) = (dest, source, rang)
+                    if currentValue in range(source, source + rang):
+                        currentValue = currentValue + (dest - source)
+                        break   # Check next mapping
+            result = min(result, currentValue)
+    return result
 
 def part2(lines):
     result = -1
     # PART 2 SOLUTION
 
-    result = 10e30
     seeds = []
     seed_to_soil_mapping = []
     soil_to_fertilizer_mapping = []
@@ -79,6 +103,7 @@ def part2(lines):
     
     seed_line = lines[0]
     seeds = seed_line.strip().split(': ')[1].split()
+    seeds = list(map(lambda x: int(x), seeds))
     seeds = list(zip(*[iter(seeds)] * 2))
     lines = lines[2:]
 
@@ -100,27 +125,16 @@ def part2(lines):
                 temperature_to_humidity_mapping, 
                 humidity_to_location_mapping]
     
+    mapping_list = List()
+    for mapping in mappings:
+        mapping_list.append(mapping)
+    
     number_of_seeds_to_check = 0
     for (_, seed_rang) in seeds:
-        number_of_seeds_to_check += int(seed_rang)
-    print(f'Number of seeds to check: {number_of_seeds_to_check}')
+        number_of_seeds_to_check += seed_rang
+    # print(f'Number of seeds to check: {number_of_seeds_to_check}')
     
-    number_checked = 0
-    for (s, seed_rang) in seeds:
-        s = int(s)
-        seed_rang = int(seed_rang)
-        for seed in range(s, s+seed_rang):
-            number_checked += 1
-            if number_checked % 1e6 == 0: print(number_checked)
-            currentValue = seed
-            for mapping in mappings:
-                for (dest, source, rang) in mapping:
-                    (dest, source, rang) = (int(dest), int(source), int(rang))
-                    if currentValue in range(source, source + rang):
-                        currentValue = currentValue + (dest - source)
-                        break   # Check next mapping
-            result = min(result, currentValue)
-
+    result = check_seeds(seeds, mapping_list)
 
     if result != -1:
         print("The solution to part two is: " + str(result))
