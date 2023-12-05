@@ -129,9 +129,9 @@ def part2(lines):
     for mapping in mappings:
         mapping_list.append(mapping)
     
-    number_of_seeds_to_check = 0
-    for (_, seed_rang) in seeds:
-        number_of_seeds_to_check += seed_rang
+    # number_of_seeds_to_check = 0
+    # for (_, seed_rang) in seeds:
+    #     number_of_seeds_to_check += seed_rang
     # print(f'Number of seeds to check: {number_of_seeds_to_check}')
     
     result = check_seeds(seeds, mapping_list)
