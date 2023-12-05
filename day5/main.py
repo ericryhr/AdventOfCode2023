@@ -60,7 +60,6 @@ def part1(lines):
         currentValue = seed
         for mapping in mappings:
             for (dest, source, rang) in mapping:
-                (dest, source, rang) = (dest, source, rang)
                 if currentValue in range(source, source + rang):
                     currentValue = currentValue + (dest - source)
                     break   # Check next mapping
@@ -81,7 +80,6 @@ def check_seeds(seeds, mappings):
             currentValue = seed
             for mapping in mappings:
                 for (dest, source, rang) in mapping:
-                    (dest, source, rang) = (dest, source, rang)
                     if currentValue in range(source, source + rang):
                         currentValue = currentValue + (dest - source)
                         break   # Check next mapping
