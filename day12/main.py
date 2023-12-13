@@ -71,7 +71,15 @@ def part2(lines):
     result = -1
     # PART 2 SOLUTION
 
-
+    result = 0
+    for line in lines:
+        line = line.strip().split()
+        springs = list(line[0] + '?' + line[0] + '?' + line[0] + '?' + line[0] + '?' + line[0]) 
+        info = list(map(lambda x: int(x), line[1].split(','))) * 5
+        result = max(result, springs.count('?'))
+        # r = gen_all_possible_combinations(springs, info)
+        # print(r)
+        # result += r
 
 
 
@@ -87,5 +95,5 @@ def read_input(filename="day12/input.txt"):
 if __name__ == "__main__":
     lines = read_input()
 
-    part1(lines)
+    # part1(lines)
     part2(lines)
